@@ -1,9 +1,7 @@
 import asyncio
 from datetime import datetime
 from random import randint
-
 from aiogram.types.message import Message
-from sqlalchemy.exc import IntegrityError
 
 from loader import users_db, variants_db
 from handlers.users._points_transfer import EGE_POINTS_FOR_NUMBERS, OGE_POINTS_FOR_NUMBERS
@@ -36,16 +34,6 @@ async def check_answers(msg_with_answers: Message, variant_title: str = None, va
         else:
             results.append((number, 'Нет ответа', False))
     return results, primary_points, tasks_solved
-
-
-async def add_to_db(message: Message):
-    try:
-        users_db.add_user(
-            user_id=message.from_user.id,
-            name=message.from_user.full_name
-        )
-    except IntegrityError:
-        pass
 
 
 async def watch_notifications(dp, delay=5):

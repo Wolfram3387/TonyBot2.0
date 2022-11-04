@@ -1,8 +1,9 @@
 from aiogram import types
 
-from keyboards.inline.users import answer_CD, _categories, generate_markup
+from keyboards.inline.users import answer_CD, generate_markup
 from handlers.users.commands import show_user_menu
 from loader import dp
+from utils.db_api.postgres import variants_db
 
 
 async def show_main_menu(callback: types.CallbackQuery, **kwargs):
@@ -10,14 +11,17 @@ async def show_main_menu(callback: types.CallbackQuery, **kwargs):
 
 
 async def list_categories(callback: types.CallbackQuery, level, **kwargs):
-    categories = [...]  # TODO Выбрать все категории вариантов из БД
+    categories = [line['category'] for line in variants_db.select_all().values()]
     markup = await generate_markup(buttons=categories)
     text = '...'
     await callback.message.edit_text(text=text, reply_markup=markup)
 
 
 async def list_titles(callback: types.CallbackQuery, level, category, **kwargs):
-    pass
+    titles = [line['title'] for line in variants_db.select(category=category).values()]
+    markup = await generate_markup(buttons=titles)
+    text = '...'
+    await callback.message.edit_text(text=text, reply_markup=markup)
 
 
 async def list_take_answers(callback: types.CallbackQuery, level, category, title_id):

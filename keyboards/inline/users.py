@@ -1,4 +1,4 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.utils.callback_data import CallbackData
 from typing import List
 
@@ -43,13 +43,14 @@ def make_callback_data(level=0, category=0, title_id=0):
     return answer_CD.new(level=level, category=category, title_id=title_id)
 
 
-def generate_markup(buttons: List[InlineKeyboardButton], markup: InlineKeyboardMarkup = InlineKeyboardMarkup()):
+def generate_markup(buttons: List[InlineKeyboardButton], callbacks=List[CallbackQuery],
+                    markup: InlineKeyboardMarkup = InlineKeyboardMarkup()):
     """Создаёт клавиатуру с row_width=1 и пролистыванием страниц, если это потребуется"""
     btn_1 = InlineKeyboardButton(text='<-', callback_data=make_callback_data())
     btn_2 = InlineKeyboardButton(text='', callback_data=make_callback_data())
     btn_3 = InlineKeyboardButton(text='->', callback_data=make_callback_data())
     row_number = 1
-    for button in buttons:
+    for button, callbacks in zip(buttons, callbacks):
         if row_number % 10 != 0:
             markup.row(button)
             row_number += 1

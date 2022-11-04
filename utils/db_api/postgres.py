@@ -45,6 +45,10 @@ class Variants(Database):
         super(Variants, self).__init__(columns, ref + "Variants/")
 
 
+students_db = Students(ref='')
+variants_db = Variants(ref='')
+
+
 #---------------------------FOR TESTS-----------------------------------------------------
 # if __name__ == '__main__':
 #     s = Students("/")

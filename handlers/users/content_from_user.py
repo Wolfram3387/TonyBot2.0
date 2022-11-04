@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from data.config import ADMINS
 from filters import IsPrivate, IsUser
-from keyboards.default import u_menu, u_cancel_1, u_finish_entering, u_variants_categories, u_cancel_2, UserButtons
+from keyboards.default import u_menu, UserButtons
 from loader import dp, users_db, variants_db, bot
 from ._points_transfer import EGE_TRANSFER, EGE_POINTS_FOR_NUMBERS, OGE_TRANSFER, OGE_POINTS_FOR_NUMBERS, \
     MAX_PRIMARY_POINTS_FOR_OGE
